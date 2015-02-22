@@ -1,0 +1,19 @@
+---
+title: "Comparision of the exponential distribution and the central limit theorem "
+author: "Alexander Lemm"
+date: "February 22, 2015"
+output: pdf_document
+---
+
+## Overview
+
+In this project you will investigate the exponential distribution in R and compare it with the Central Limit Theorem (CLT). 
+
+The exponential distribution can be simulated in R with the `rexp(n, lambda)` function where lambda $\lambda$ represents the rate parameter. The mean of an exponential distribution is $\mu = \frac{1}{\lambda}$ and the standard deviation is $\sigma = \frac{1}{\lambda}$. 
+
+According the CLT if a sample consists of at least 30 independent observations and the data are not strongely skewed, then the distribution of the sample mean, the sampling distribution, is well approximated by a normal model which expressed in mathematical notation is: $\bar{x}_{n}$ ~ $N(\mu, \frac{\sigma }{\sqrt{n}})$.
+
+In this analysis we will show that a sampling distribution of the mean of an exponential distribution with $n = 40$ observations and $\lambda = 0.2$ is indeed approxmiately $N(\frac{1}{0.2}, \frac{\frac{1}{0.2}}{\sqrt{40}})$ distributed.
+
+In the following we will draw 1000 samples of size 40 from a $Exp(\frac{1}{0.2}, \frac{1}{0.2}) distribution. 
+
