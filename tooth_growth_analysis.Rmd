@@ -173,20 +173,20 @@ In all three cases the p-value is smaller than the significance level 0.05 which
 
 Interpreting the first row of the table for illustriation:
 
-We are 95% confident that the average tooth length of guinea pigs who received a 2mg dose of vitamin C is on average `r round(pairwise_results$conf.low[1], 2)` to `r round(pairwise_results$conf.high[1], 2)` millimeters higher than those who received a 0.5mg dose.
+We are 95% confident that the average tooth length of guinea pigs who received a 2mg dose of vitamin C is on average `r round(pairwise_results$conf.low[1], 2)` to `r round(pairwise_results$conf.high[1], 2)` millimeters higher than those who received a 1mg dose.
 
 
 # Conclusions
 
 We were able to show that the observed difference of tooth length mean across supplement types is statistically not different from 0.
 
-However, we were able to highlight the fact tooth length indeed varies across groups of dose levels and that all of those differences are statistical and pramatically significant. 
+However, we were able to highlight the fact that tooth length indeed varies across groups of dose levels and that all of those differences are statistical and pramatically significant. 
 
 A latter study might take into account pairwise t-tests of the different supplement types/dose level combinations.
 
 ## Appendix (Source Code)
 
-This section includes the source code which was used for generating the results of the analysis. In addition you may check out the complete report source code on [GitHub](https://github.com/alex23lemm).
+This section includes the source code which was used for generating the results of the analysis. In addition you may check out the complete report source code on [GitHub](https://github.com/alex23lemm/Statistical-inference-project).
 
 ```{r eval=FALSE}
 
@@ -231,6 +231,7 @@ ggplot(ToothGrowth, aes(as.factor(dose), len)) +
   ggtitle('Tooth length by dose level and supplement type') +
   scale_fill_manual(values = wes_palette("FantasticFox")) +
   theme(legend.position = "none")
+
 
 
 # T-test for difference in tooth length means across supplement types
