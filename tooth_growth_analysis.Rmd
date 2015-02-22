@@ -181,4 +181,79 @@ We were able to show that the observed difference of tooth length mean across su
 
 However, we were able to highlight the fact tooth length indeed varies across groups of dose levels and that all of those differences are statistical and pramatically significant. 
 
-A latter study might take into account pairwise t-tests of the different supplement types/dose level combinations
+A latter study might take into account pairwise t-tests of the different supplement types/dose level combinations.
+
+## Appendix (Source Code)
+
+This section includes the entire source code which was used for the analysis.
+
+```{r eval=FALSE}
+
+library(ggplot2)
+library(dplyr)
+library(broom)
+library(wesanderson)
+library(grid)
+
+# Generate plots
+
+g_len_by_supp <- ggplot(ToothGrowth, aes(supp, len)) + 
+  geom_boxplot() +
+  xlab('Supplement type') +
+  ylab('Tooth length (mm)') +
+  ggtitle('Tooth length by supplement type')
+
+g_len_by_dose <- ggplot(ToothGrowth, aes(as.factor(dose), len)) + 
+  geom_boxplot() +
+  xlab('Dose (mg)') +
+  ylab('Tooth length (mm)') +
+  ggtitle('Tooth length by dose level')
+
+ggplot(ToothGrowth, aes(as.factor(dose), len)) +
+  geom_boxplot(aes(fill = as.factor(dose))) + 
+  facet_grid(. ~ supp) +
+  xlab('Dose (mg)') +
+  ylab('Tooth length (mm)') +
+  ggtitle('Tooth length by dose level and supplement type') +
+  scale_fill_manual(values = wes_palette("FantasticFox")) +
+  theme(legend.position = "none")
+
+
+# T-test for difference in tooth length means across supplement types
+
+t_diff_supp <- t.test(len ~ supp, ToothGrowth, var.equal = FALSE)
+tidy(t_diff_supp)
+
+# Pairwise t-tests for differences in tooth lengths means across dose levels
+
+pairwise_results <- t.test(ToothGrowth$len[ToothGrowth$dose == 2],
+       ToothGrowth$len[ToothGrowth$dose == 1]) %>% 
+  tidy %>%
+  mutate(
+    null_hypothesis = 'µ2mg - µ1mg = 0'
+  ) %>% 
+  select(9, 1:8)
+  
+
+pairwise_results <- t.test(ToothGrowth$len[ToothGrowth$dose == 2],
+       ToothGrowth$len[ToothGrowth$dose == 0.5]) %>% 
+  tidy %>%
+  mutate(
+    null_hypothesis = 'µ2mg - µ0.5mg = 0'
+  ) %>% 
+  select(9, 1:8) %>%
+  bind_rows(pairwise_results, .)
+
+pairwise_results <- t.test(ToothGrowth$len[ToothGrowth$dose == 1],
+       ToothGrowth$len[ToothGrowth$dose == 0.5]) %>%
+  tidy %>%
+  mutate(
+    null_hypothesis = 'µ1mg - µ0.5mg = 0'
+  ) %>% 
+  select(9, 1:8) %>%
+  bind_rows(pairwise_results, .)
+
+print.data.frame(pairwise_results)
+
+```
+
