@@ -1,7 +1,8 @@
 ---
-title: "ToothGrowth data analysis"
+title: "Impact of different vitamin C dose levels and supplement types on tooth lengths of Guinea pigs"
 output: pdf_document
 author: "Alexander Lemm"
+date: "February 22, 2015"
 ---
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -43,7 +44,7 @@ The average guinea pig tooth length is `r round(mean(ToothGrowth$len), 3)` with 
 However, we are more interested in finding differences in tooth length across different groups of supplement types, dose levels and their respective combinations.
 
 
-```{r echo=FALSE, fig.width=7, fig.height=3, fig.align='center'}
+```{r echo=FALSE, fig.width=7, fig.height=2.5, fig.align='center'}
 
 g_len_by_supp <- ggplot(ToothGrowth, aes(supp, len)) + 
   geom_boxplot() +
@@ -185,7 +186,7 @@ A latter study might take into account pairwise t-tests of the different supplem
 
 ## Appendix (Source Code)
 
-This section includes the entire source code which was used for the analysis.
+This section includes the source code which was used for generating the results of the analysis. In addition you may check out the complete report source code on [GitHub](https://github.com/alex23lemm).
 
 ```{r eval=FALSE}
 
@@ -194,6 +195,19 @@ library(dplyr)
 library(broom)
 library(wesanderson)
 library(grid)
+
+
+# Tables
+
+with(ToothGrowth, table(dose, supp))
+
+ToothGrowth %>% group_by(dose) %>% 
+  summarize(
+    q25 = quantile(len, 0.25),
+    q75 = quantile(len, 0.75)
+  ) %>%
+  as.data.frame
+
 
 # Generate plots
 
