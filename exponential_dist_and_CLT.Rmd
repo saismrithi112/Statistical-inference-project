@@ -1,7 +1,7 @@
 ---
 title: "Comparison of the exponential distribution and the central limit theorem "
-author: "Alexander Lemm"
-date: "February 22, 2015"
+author: "Saismrithi .S. Bhat"
+date: "July 18, 2020"
 output: pdf_document
 ---
 
